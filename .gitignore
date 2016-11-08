@@ -1,0 +1,7 @@
+*.pyc
+*.c
+*.p
+.DS_Store
+*.out
+Makefile
+picoc
