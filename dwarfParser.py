@@ -3,6 +3,7 @@ import re
 import sys
 import json
 
+<<<<<<< HEAD
 #returns the next line
 #gets pointer back to the previous line
 def peek_line(f):
@@ -78,6 +79,11 @@ class Parser:
 		self._functions = list()
 		self._LocSym = list()
 		self._ComUnit = list()
+=======
+class Parser:
+	def __init__(self,DwarfFile):
+		self.dumpFile = DwarfFile
+>>>>>>> 8f2539f68c76770f7a9b65095d5d095b38f70571
 
 	#returns a list of .h files
 	def captureLocalSymbols(self):
@@ -90,8 +96,13 @@ class Parser:
 				else:
 					for i in m:
 						LocalSymbols[i] = True
+<<<<<<< HEAD
 		self._LocSym = LocalSymbols.keys()
 		return None
+=======
+
+		return LocalSymbols.keys()
+>>>>>>> 8f2539f68c76770f7a9b65095d5d095b38f70571
 
 	#returns a list of .c files
 	def captureCompileUnits(self):
@@ -107,6 +118,7 @@ class Parser:
 							pass
 						else:
 							CompileUnits[i] = True
+<<<<<<< HEAD
 		self._ComUnit = CompileUnits.keys()
 		return None
 
@@ -324,4 +336,57 @@ regex3 = r'\s*'
 regex4 = r'\w+\d*_*'
 
 
+=======
+		
+		return CompileUnits.keys()
+
+	def processSubProgram(self, linkedList):
+		return 0
+
+	def captureSubPrograms(self):
+		f = open(self.dumpFile)
+		a = f.readlines()
+		fileLength = len(a)
+		count = 0
+		bigLink = list()
+		
+		#getting all the subprogram sections
+		for i in range(0, fileLength):
+			m = re.findall(r"DW_TAG_subprogram", a[i])
+			if not m:
+				pass
+			else:
+				count += 1
+				smLink = list()
+				for j in range(1,10):
+					smLink.append(a[i+j].rstrip().lstrip().strip("\n"))
+				bigLink.append(smLink)
+				i += 11
+
+		return bigLink
+
+
+
+picoc = Parser("dwarfPicoc.txt")
+
+
+#sample capturing .h files and .c files on dwarfPicoc
+#WORKS
+# print picoc.captureLocalSymbols()
+# print picoc.captureCompileUnits()
+
+a = picoc.captureSubPrograms()
+h = dict()
+for i in a[0]:
+	k = i.split()
+	h[k[0]] = k[-1:]
+
+print json.dumps(h, indent=2) 
+
+def processSubProgram(listOfSubPrg):
+	SubProgams = listOfSubPrg
+	for a in SubProgams:
+		return 0
+	return 0
+>>>>>>> 8f2539f68c76770f7a9b65095d5d095b38f70571
 
